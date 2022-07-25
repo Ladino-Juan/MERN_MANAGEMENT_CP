@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "heroku-postbuild": "cd src/public && npm install && npm run build",
+    "heroku-prebuild": "npm install --dev",
     "dev": "nodemon src/index.js",
     "webpack": "webpack --mode development --watch --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
