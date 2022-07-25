@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios'
+import { axiosInstance } from '../config'
 import { useNavigate } from 'react-router-dom'
 const Login = (props) => {
   const [datos, setDatos] = useState({
@@ -20,7 +20,7 @@ const Login = (props) => {
     if (!e.target.checkValidity()) {
       alert('please fill correct username or password')
     } else {
-      let res = await axios.post('/usuario/login', datos)
+      let res = await axiosInstance.post('/usuario/login', datos)
       props.passData(true, res.data.id, res.data.token)
       navigate(`${res.data.id}/api/clientes`)
     }

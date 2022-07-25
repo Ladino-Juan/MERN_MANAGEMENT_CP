@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import axios from 'axios'
+import {axiosInstance} from '../config'
 import { Bar } from 'react-chartjs-2'
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, registerables } from 'chart.js'
@@ -11,7 +11,7 @@ import Pagination from './pagination'
 ChartJS.register(...registerables)
 
 const Informes = (props) => {
-  axios.defaults.headers.common = { Authorization: `Bearer ${props.token}` }
+  axiosInstance.defaults.headers.common = { Authorization: `Bearer ${props.token}` }
 
   const [users, setUsers] = useState([])
   const [searchM, setSearchM] = useState('')
@@ -23,7 +23,7 @@ const Informes = (props) => {
   const URL = `/usuario/${props.usuarioID}/api/clientes`
 
   const showData = async () => {
-    const res = await axios.get(URL)
+    const res = await axiosInstance.get(URL)
     setUsers(res.data)
   }
   //función de búsqueda

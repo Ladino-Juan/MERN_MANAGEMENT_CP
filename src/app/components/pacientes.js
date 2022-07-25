@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Pagination from './pagination'
-import axios from 'axios'
+import {axiosInstance} from '../config'
 
 class Pacientes extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Pacientes extends Component {
     this.searcher = this.searcher.bind(this)
     this.paginate = this.paginate.bind(this)
 
-    axios.defaults.headers.common = {
+    axiosInstance.defaults.headers.common = {
       Authorization: `Bearer ${this.props.token}`,
     }
   }
@@ -37,7 +37,7 @@ class Pacientes extends Component {
     const URL = `/usuario/${this.props.usuarioID}/api/clientes`
     e.preventDefault()
     if (this.state._id) {
-      await axios.put(`${URL}/${this.state._id}`, this.state).then(() => {
+      await axiosInstance.put(`${URL}/${this.state._id}`, this.state).then(() => {
         M.toast({ html: 'Paciente Actualizado' })
       })
       this.setState({
@@ -90,13 +90,13 @@ class Pacientes extends Component {
 
   showData = async () => {
     const URL = `/usuario/${this.props.usuarioID}/api/clientes`
-    const res = await axios.get(URL)
+    const res = await axiosInstance.get(URL)
     this.setState({ pacientes: res.data })
   }
 
   editPaciente = async (id) => {
     const URL = `/usuario/${this.props.usuarioID}/api/clientes`
-    const res = await axios.get(`${URL}/${id}`)
+    const res = await axiosInstance.get(`${URL}/${id}`)
 
     this.setState({
       nombre: res.data.nombre,

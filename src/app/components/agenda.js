@@ -1,10 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Pagination from './pagination'
-import axios from 'axios'
+import { axiosInstance } from '../config'
 
 const Agenda = (props) => {
-  axios.defaults.headers.common = { Authorization: `Bearer ${props.token}` }
+  axiosInstance.defaults.headers.common = { Authorization: `Bearer ${props.token}` }
 
   const [users, setUsers] = useState([])
   const [search, setSearch] = useState('')
@@ -15,7 +15,7 @@ const Agenda = (props) => {
   const URL = `/usuario/${props.usuarioID}/api/clientes`
 
   const showData = async () => {
-    const res = await axios.get(URL)
+    const res = await axiosInstance.get(URL)
     setUsers(res.data)
   }
   //función de búsqueda
@@ -38,9 +38,9 @@ const Agenda = (props) => {
         : estate == 'inactivo'
         ? { estado: estate }
         : { proxima_c: fecha, estado: estate }
-    await axios.put(`${URL}/${id}`, newState).then(async () => {
+    await axiosInstance.put(`${URL}/${id}`, newState).then(async () => {
       M.toast({ html: `Estado Actualizado: ${estate}` })
-      await axios.get(URL).then((response) => {
+      await axiosInstance.get(URL).then((response) => {
         setUsers(response.data)
       })
     })

@@ -21,7 +21,11 @@ app.use(cors())
 app.use('/usuario',require('./routes/client.routes'));
 
 //Static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/build', 'index.html'));
+});
 
 //Starting the server
 app.listen(app.get('port'), () => {
